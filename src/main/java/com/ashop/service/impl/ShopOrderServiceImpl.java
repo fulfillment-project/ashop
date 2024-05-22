@@ -23,6 +23,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     }
 
     @Override
+    @Transactional
     public List<ShopOrderResponseDTO> sellerSelectOrderList(ShopOrderRequestDTO orderRequestDTO) throws Exception {
 //        String fromDate = orderRequestDTO.getFromDate();
 //        String toDate = orderRequestDTO.getToDate();
@@ -31,7 +32,10 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 //        LocalDateTime toDateTime = LocalDateTime.parse(toDate + " 23:59:59", formatter);
 
         List<ShopOrder> orderList = this.shopOrderRepository.findByVendorIdAndUpdateDateTimeBetween(orderRequestDTO.getVendorId());
-        System.out.println(orderList.size());
+        for(ShopOrder order : orderList){
+            order.setOrderCheck("T");
+            this.shopOrderRepository.save(order);
+        }
         return orderList.stream().map(order ->
                 ShopOrderResponseDTO.OrderFactory(order)
         ).collect(Collectors.toList());
