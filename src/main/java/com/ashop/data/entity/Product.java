@@ -34,4 +34,6 @@ public class Product extends BaseEntity{
 
     private Integer deliveryCharge;
 
+    private String connectCheck;
+
 }
