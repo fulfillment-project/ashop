@@ -178,7 +178,7 @@
 </nav>
   <div class="product-container" style="margin-top: 50px;">
     <div class="product-img">
-      <img src="/static/img/keyboard1.jpg">
+      <img th:src="@{/static/img/{image}(image=${product.image})}">
     </div>
 
     <div class="product-content">
